@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+from threading import Thread
+import time
 import flet as ft
 
 from .scan import SCAN, the_statatus_db
 import os
-from naruno.lib.perpetualtimer import perpetualTimer
 
 
 network = None
@@ -220,7 +221,12 @@ def scan_page(page: ft.Page):
             page.update()
 
     block_situation_tracker()
-    perpetualTimer(interval_1, block_situation_tracker)
+    def threaderblock_situation_tracker():
+        while True:
+            block_situation_tracker()
+            time.sleep(interval_1)
+    Thread(target=threaderblock_situation_tracker).start()
+
 
 
 
@@ -261,7 +267,12 @@ def scan_page(page: ft.Page):
             page.update()
 
     status_situation_tracker()
-    perpetualTimer(interval_2, status_situation_tracker)
+    def threaderstatus_situation_tracker():
+        while True:
+            status_situation_tracker()
+            time.sleep(interval_2)
+    Thread(target=threaderstatus_situation_tracker).start()    
+
 
 
     page.add(row, tx_row,)

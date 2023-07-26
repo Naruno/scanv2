@@ -3,10 +3,10 @@
 
 import os
 from threading import Thread
+import time
 from kot import KOT
 import requests
 
-from naruno.lib.perpetualtimer import perpetualTimer
 
 the_statatus_db = KOT("status_db", folder=os.path.join(os.path.dirname(__file__)))
 
@@ -25,32 +25,37 @@ class SCAN:
 
 
     @staticmethod
-    def bacground_proccess_1(network, port):
+    def bacground_proccess_1(network, port, interval):
         #make a request to network:port /export/block/json
         #if response is 200
-        try:
-            response = requests.get(f"http://{network}:{port}/export/block/json")
-            if response.status_code == 200:
-                the_statatus_db.set("block", response.json())
-        except:
-            pass
+        while True:
+            try:
+                response = requests.get(f"http://{network}:{port}/export/block/json")
+                if response.status_code == 200:
+                    the_statatus_db.set("block", response.json())
+            except:
+                pass
+            time.sleep(interval)
     @staticmethod
-    def bacground_proccess_2(network, port):
-        try:
-            response = requests.get(f"http://{network}:{port}/status")
-            if response.status_code == 200:
+    def bacground_proccess_2(network, port, interval):
+        while True:
+            try:
+                response = requests.get(f"http://{network}:{port}/status")
+                if response.status_code == 200:
 
-                the_statatus_db.set("status", response.json())
-        except:
-            pass
+                    the_statatus_db.set("status", response.json())
+            except:
+                pass
+            time.sleep(interval)
     @staticmethod
     def background(network_1, port_1, network_2=None, port_2=None,interval_1=1,interval_2=100):
         if network_2 == None:
             network_2 = network_1
         if port_2 == None:
             port_2 = port_1
-        perpetualTimer(interval_1, SCAN.bacground_proccess_1, args=(network_1, port_1,))
-        perpetualTimer(interval_2, SCAN.bacground_proccess_2, args=(network_2, port_2,))
+        
+        Thread(target=SCAN.bacground_proccess_1, args=(network_1, port_1, interval_1,)).start()
+        Thread(target=SCAN.bacground_proccess_2, args=(network_2, port_2, interval_2,)).start()
 
 
 def main():
