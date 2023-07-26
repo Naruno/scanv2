@@ -15,6 +15,7 @@ package_dir={'':'src'},
 install_requires=[
     "flet==0.8.4",
     "kot==0.20.0",
+    "naruno==0.59.0",
     "requests==2.28.0"
 ],
 entry_points = {
