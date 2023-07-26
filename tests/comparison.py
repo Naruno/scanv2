@@ -3,7 +3,7 @@
 import time
 
 import sqlite3
-from kot import KOT
+from scan import SCAN
 
 
 number = 100000
@@ -17,7 +17,7 @@ data_2 = "Mehmet"*5
 import os
 if os.path.exists("mydb.db"):
     os.remove("mydb.db")
-KOT.database_delete_all()
+SCAN.database_delete_all()
 
 
 
@@ -33,8 +33,8 @@ conn.commit()
 time_2 = time.time()
 
 
-# KOT
-client_address_db = KOT("client_addresses")
+# SCAN
+client_address_db = SCAN("client_addresses")
 time_3 = time.time()
 big_list = {}
 for x in range(0, number):
@@ -51,7 +51,7 @@ cursor.execute(f"SELECT * FROM Customer WHERE customer_id = {find_number}")
 print(cursor.fetchone())
 time_6 = time.time()
 
-# KOT
+# SCAN
 the_list = client_address_db.get("users")
 time_7 = time.time()
 print(the_list[str(find_number)])
@@ -66,7 +66,7 @@ for x in range(0, edit_account_number):
 conn.commit()
 time_10 = time.time()
 
-# KOT
+# SCAN
 time_11 = time.time()
 for x in range(0, edit_account_number):
     the_list[str(x)] = [data_2,data_2]
@@ -81,7 +81,7 @@ cursor.execute(f"SELECT * FROM Customer")
 cursor.fetchall()
 time_14 = time.time()
 
-# KOT
+# SCAN
 time_15 = time.time()
 client_address_db.get("users")
 time_16 = time.time()
@@ -94,20 +94,20 @@ time_16 = time.time()
 
 print("WRITE")
 print("SQLLITE: ", time_2 - time_1)
-print("KOT:     ", time_4 - time_3)
+print("SCAN:     ", time_4 - time_3)
 
 print("\nREAD")
 print("SQLLITE: ", time_6 - time_5)
-print("KOT:     ", time_8 - time_7)
+print("SCAN:     ", time_8 - time_7)
 
 print("\nUPDATE")
 print("SQLLITE: ", time_10 - time_9)
-print("KOT:     ", time_12 - time_11)
+print("SCAN:     ", time_12 - time_11)
 
 print("\nREAD ALL")
 print("SQLLITE: ", time_14 - time_13)
-print("KOT:     ", time_16 - time_15)
+print("SCAN:     ", time_16 - time_15)
 
 print("\nSIZE")
 print("SQLLITE: ", os.path.getsize("mydb.db"))
-print("KOT:     ", client_address_db.size_all())
+print("SCAN:     ", client_address_db.size_all())
