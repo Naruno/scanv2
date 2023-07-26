@@ -30,28 +30,26 @@ class SCAN:
 
     @staticmethod
     def bacground_proccess_1(network, port, ):
-
             try:
-                response = requests.get(f"http://{network}:{port}/export/block/json")
+                response = requests.get(f"http://{network}:{port}/export/block/json", timeout=5)
                 if response.status_code == 200:
                     for old_key in the_block_db.get_all():
                         the_block_db.delete(old_key)
                     the_block_db.set(str(int(time.time())), response.json())
 
             except:
-                
-                traceback.print_exc()
+                pass
 
     @staticmethod
     def bacground_proccess_2(network, port, ):
 
             try:
-                response = requests.get(f"http://{network}:{port}/status")
+                response = requests.get(f"http://{network}:{port}/status", timeout=130)
                 if response.status_code == 200:
 
                     the_statatus_db.set("status", response.json())
             except:
-                traceback.print_exc()
+                pass
 
     @staticmethod
     def background(network_1, port_1, network_2=None, port_2=None,interval_1=1,interval_2=100):
