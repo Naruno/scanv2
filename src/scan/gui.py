@@ -4,7 +4,7 @@ from threading import Thread
 import time
 import flet as ft
 
-from .scan import SCAN, the_statatus_db
+from .scan import SCAN, the_statatus_db, the_block_db
 import os
 
 
@@ -168,7 +168,20 @@ def scan_page(page: ft.Page):
     page.overlay.append(bs)
 
     def block_situation_tracker():
-        record = the_statatus_db.get("block")
+        record = None
+        try:
+            raw_record = the_block_db.get_all()
+
+            list_record = []
+            for i in raw_record:
+                list_record.append([float(i), raw_record[i]])
+
+            list_record.sort(key=lambda x: x[0], )
+
+            record = list_record[0][1]
+        except:
+            pass
+        
         if record != None:
             first_value = record["round_1"]
             second_value = str(record["sequence_number"])

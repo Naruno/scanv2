@@ -6,8 +6,9 @@ from threading import Thread
 import time
 from kot import KOT
 import requests
+import traceback
 
-
+the_block_db = KOT("blocks_db", folder=os.path.join(os.path.dirname(__file__)))
 the_statatus_db = KOT("status_db", folder=os.path.join(os.path.dirname(__file__)))
 
 
@@ -32,9 +33,12 @@ class SCAN:
             try:
                 response = requests.get(f"http://{network}:{port}/export/block/json")
                 if response.status_code == 200:
-                    the_statatus_db.set("block", response.json())
+                    for old_key in the_block_db.get_all():
+                        the_block_db.delete(old_key)
+                    the_block_db.set(str(int(time.time())), response.json())
+
             except:
-                pass
+                traceback.print_exc()
             time.sleep(interval)
     @staticmethod
     def bacground_proccess_2(network, port, interval):
