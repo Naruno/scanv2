@@ -14,11 +14,18 @@ port = None
 
 interval_1 = None
 interval_2 = None
+thread_generated = False
+
+block_record = None
+status_record = None
 
 
 def scan_page(page: ft.Page):
     global interval_1
     global interval_2
+    global thread_generated
+    global block_record
+    global status_record
     page.scroll = "AUTO"
     page.theme = ft.Theme(font_family="Poppins")
 
@@ -167,26 +174,13 @@ def scan_page(page: ft.Page):
         )
     page.overlay.append(bs)
 
-    def block_situation_tracker():
-        record = None
-        try:
-            raw_record = the_block_db.get_all()
-
-            list_record = []
-            for i in raw_record:
-                list_record.append([float(i), raw_record[i]])
-
-            list_record.sort(key=lambda x: x[0], )
-
-            record = list_record[0][1]
-        except:
-            pass
-        
-        if record != None:
-            first_value = record["round_1"]
-            second_value = str(record["sequence_number"])
-            third_value = record["round_2"]
-            validating_list = record["validating_list"]
+    def block_situation_tracker_updater(topic, message):
+        global block_record
+        if block_record != None:
+            first_value = block_record["round_1"]
+            second_value = str(block_record["sequence_number"])
+            third_value = block_record["round_2"]
+            validating_list = block_record["validating_list"]
 
             value = 0.1
             if first_value == True:
@@ -231,22 +225,40 @@ def scan_page(page: ft.Page):
             
 
 
-            page.update()
+            page.update()        
 
-    block_situation_tracker()
+    def block_situation_tracker():
+        global block_record
+        block_record = None
+        try:
+            raw_record = the_block_db.get_all()
+
+            list_record = []
+            for i in raw_record:
+                list_record.append([float(i), raw_record[i]])
+
+            list_record.sort(key=lambda x: x[0], )
+
+            block_record = list_record[0][1]
+        except:
+            pass
+        page.pubsub.send_all_on_topic("block", "block")
+        
+
+
+    
     def threaderblock_situation_tracker():
         while True:
             block_situation_tracker()
             time.sleep(interval_1)
-    Thread(target=threaderblock_situation_tracker).start()
+    
 
 
 
-
-    def status_situation_tracker():
-        record = the_statatus_db.get("status")
-        if record != None:
-            working = True if record["status"] == "Working" else False
+    def status_situation_tracker_update(topic, message):
+        global status_record
+        if status_record != None:
+            working = True if status_record["status"] == "Working" else False
 
             if not working:
 
@@ -261,7 +273,7 @@ def scan_page(page: ft.Page):
                                 color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER) 
 
             
-            raw_nodes = record["connected_nodes"]
+            raw_nodes = status_record["connected_nodes"]
             nodes = []
             for i in raw_nodes:
                 nodes.append([i.split(":")[0], i.split(":")[1]])
@@ -278,13 +290,28 @@ def scan_page(page: ft.Page):
 
 
             page.update()
+    def status_situation_tracker():
+        global status_record
+        status_record = the_statatus_db.get("status")
+        page.pubsub.send_all_on_topic("status", "status")
 
-    status_situation_tracker()
+
+
+    
     def threaderstatus_situation_tracker():
         while True:
             status_situation_tracker()
             time.sleep(interval_2)
-    Thread(target=threaderstatus_situation_tracker).start()    
+
+    page.pubsub.subscribe_topic("block",block_situation_tracker_updater)
+    page.pubsub.subscribe_topic("status",status_situation_tracker_update)
+    block_situation_tracker()
+    status_situation_tracker()
+    if not thread_generated:
+        print("Threader started")
+        Thread(target=threaderblock_situation_tracker).start()
+        Thread(target=threaderstatus_situation_tracker).start()    
+        thread_generated = True
 
 
 
