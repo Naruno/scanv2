@@ -3,13 +3,13 @@ from setuptools import setup
 
 setup(name='naruno_scan',
 version='0.1.0',
-description="""Efficient Key-Value Data Storage with Multithreaded Simultaneous Writing""",
+description="""Scan website for Naruno""",
 long_description="".join(open("README.md", encoding="utf-8").readlines()),
 long_description_content_type='text/markdown',
 url='https://github.com/Naruno/scanv2',
 author='Onur Atakan ULUSOY',
-author_email='atadogan06@gmail.com',
-license='MIT',
+author_email='onur.atakan.ulusoy@naruno.org',
+license='MPL-2.0',
 packages=["scan"],
 package_dir={'':'src'},
 install_requires=[
