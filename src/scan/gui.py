@@ -297,7 +297,8 @@ def scan_page(page: ft.Page):
     def status_situation_tracker():
         global status_record
         status_record = the_statatus_db.get("status")
-        page.pubsub.send_all_on_topic("status", "status")
+        if status_record != None:
+            page.pubsub.send_all_on_topic("status", "status")
 
 
 
