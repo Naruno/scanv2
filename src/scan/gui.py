@@ -79,17 +79,15 @@ def scan_page(page: ft.Page):
                                     ft.DataTable(
                                         columns=[
                                             ft.DataColumn(ft.Text("Host")),
-                                            ft.DataColumn(
-                                                ft.Text("Port"), numeric=True
-                                            ),
+                                            ft.DataColumn(ft.Text("Port"),
+                                                          numeric=True),
                                         ],
                                         rows=[
-                                            ft.DataRow(
-                                                cells=[
-                                                    ft.DataCell(ft.Text("Loading")),
-                                                    ft.DataCell(ft.Text("0")),
-                                                ],
-                                            )
+                                            ft.DataRow(cells=[
+                                                ft.DataCell(
+                                                    ft.Text("Loading")),
+                                                ft.DataCell(ft.Text("0")),
+                                            ], )
                                         ],
                                     ),
                                 ],
@@ -107,38 +105,35 @@ def scan_page(page: ft.Page):
                 controls=[
                     ft.Card(
                         content=ft.Container(
-                            content=ft.Column(
-                                [
-                                    ft.Row(
-                                        [
-                                            ft.Text(
-                                                value="Health", style="headlineMedium"
-                                            )
-                                        ],
-                                        alignment=ft.MainAxisAlignment.CENTER,
-                                    ),  # type: ignore
-                                    ft.Row(
-                                        [
-                                            ft.Text(
-                                                "Loading",
-                                                style="headlineSmall",
-                                                color="#00ff00",
-                                            )
-                                        ],
-                                        alignment=ft.MainAxisAlignment.CENTER,
-                                    ),
-                                    ft.Row(
-                                        [
-                                            ft.Text(
-                                                "Loading",
-                                                style="headlineSmall",
-                                                color="#00ff00",
-                                            )
-                                        ],
-                                        alignment=ft.MainAxisAlignment.CENTER,
-                                    ),
-                                ]
-                            ),
+                            content=ft.Column([
+                                ft.Row(
+                                    [
+                                        ft.Text(value="Health",
+                                                style="headlineMedium")
+                                    ],
+                                    alignment=ft.MainAxisAlignment.CENTER,
+                                ),  # type: ignore
+                                ft.Row(
+                                    [
+                                        ft.Text(
+                                            "Loading",
+                                            style="headlineSmall",
+                                            color="#00ff00",
+                                        )
+                                    ],
+                                    alignment=ft.MainAxisAlignment.CENTER,
+                                ),
+                                ft.Row(
+                                    [
+                                        ft.Text(
+                                            "Loading",
+                                            style="headlineSmall",
+                                            color="#00ff00",
+                                        )
+                                    ],
+                                    alignment=ft.MainAxisAlignment.CENTER,
+                                ),
+                            ]),
                             padding=10,
                         ),
                         height=180,
@@ -151,20 +146,19 @@ def scan_page(page: ft.Page):
                 controls=[
                     ft.Card(
                         content=ft.Container(
-                            content=ft.Column(
-                                [
-                                    ft.Row(
-                                        [
-                                            ft.Text(
-                                                value="Block", style="headlineMedium"
-                                            )
-                                        ],
-                                        alignment=ft.MainAxisAlignment.CENTER,
-                                    ),  # type: ignore
-                                    ft.Text(value="Loading", style="headlineSmall"),
-                                    ft.Text(value="Loading", style="headlineSmall"),
-                                ]
-                            ),
+                            content=ft.Column([
+                                ft.Row(
+                                    [
+                                        ft.Text(value="Block",
+                                                style="headlineMedium")
+                                    ],
+                                    alignment=ft.MainAxisAlignment.CENTER,
+                                ),  # type: ignore
+                                ft.Text(value="Loading",
+                                        style="headlineSmall"),
+                                ft.Text(value="Loading",
+                                        style="headlineSmall"),
+                            ]),
                             padding=20,
                         ),
                         height=180,
@@ -183,7 +177,10 @@ def scan_page(page: ft.Page):
                     content=ft.Column(
                         [
                             ft.Row(
-                                [ft.Text(value="Transactions", style="headlineMedium")],
+                                [
+                                    ft.Text(value="Transactions",
+                                            style="headlineMedium")
+                                ],
                                 alignment=ft.MainAxisAlignment.CENTER,
                             ),  # type: ignore
                             ft.Row(
@@ -191,16 +188,17 @@ def scan_page(page: ft.Page):
                                     ft.DataTable(
                                         width=1200,
                                         columns=[
-                                            ft.DataColumn(ft.Text("Signature")),
+                                            ft.DataColumn(
+                                                ft.Text("Signature")),
                                             ft.DataColumn(ft.Text("Fee")),
                                         ],
                                         rows=[
-                                            ft.DataRow(
-                                                cells=[
-                                                    ft.DataCell(ft.Text("Loading")),
-                                                    ft.DataCell(ft.Text("Loading")),
-                                                ],
-                                            )
+                                            ft.DataRow(cells=[
+                                                ft.DataCell(
+                                                    ft.Text("Loading")),
+                                                ft.DataCell(
+                                                    ft.Text("Loading")),
+                                            ], )
                                         ],
                                     )
                                 ],
@@ -229,7 +227,10 @@ def scan_page(page: ft.Page):
                 [
                     ft.Text("This is sheet's content!"),
                     ft.Row(
-                        [ft.ElevatedButton("Close bottom sheet", on_click=close_bs)],
+                        [
+                            ft.ElevatedButton("Close bottom sheet",
+                                              on_click=close_bs)
+                        ],
                         alignment=ft.MainAxisAlignment.CENTER,
                     ),
                 ],
@@ -260,9 +261,8 @@ def scan_page(page: ft.Page):
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
             )  # type: ignore
-            row.controls[2].controls[0].content.content.controls[2] = ft.ProgressBar(
-                value=value, color="#dbff00"
-            )
+            row.controls[2].controls[0].content.content.controls[
+                2] = ft.ProgressBar(value=value, color="#dbff00")
 
             def show_bs(signature):
                 bs.open = True
@@ -285,15 +285,11 @@ def scan_page(page: ft.Page):
                 bs.update()
 
             tx_row.controls[0].content.content.controls[1].controls[0].rows = [
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(
-                            ft.Text(i["signature"]), on_tap=lambda e, i=i: show_bs(i)
-                        ),
-                        ft.DataCell(ft.Text(i["transaction_fee"])),
-                    ],
-                )
-                for i in validating_list
+                ft.DataRow(cells=[
+                    ft.DataCell(ft.Text(i["signature"]),
+                                on_tap=lambda e, i=i: show_bs(i)),
+                    ft.DataCell(ft.Text(i["transaction_fee"])),
+                ], ) for i in validating_list
             ]
 
             page.update()
@@ -308,9 +304,7 @@ def scan_page(page: ft.Page):
             for i in raw_record:
                 list_record.append([float(i), raw_record[i]])
 
-            list_record.sort(
-                key=lambda x: x[0],
-            )
+            list_record.sort(key=lambda x: x[0], )
 
             block_record = list_record[0][1]
         except:
@@ -328,27 +322,40 @@ def scan_page(page: ft.Page):
             working = True if status_record["status"] == "Working" else False
 
             if not working:
-                row.controls[1].controls[0].content.content.controls[1] = ft.Row(
-                    [ft.Text("", style="headlineSmall", color="red")],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                )  # type: ignore
-                row.controls[1].controls[0].content.content.controls[2] = ft.Row(
-                    [ft.Text("Not Working", style="headlineSmall", color="red")],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                )
+                row.controls[1].controls[0].content.content.controls[
+                    1] = ft.Row(
+                        [ft.Text("", style="headlineSmall", color="red")],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    )  # type: ignore
+                row.controls[1].controls[0].content.content.controls[
+                    2] = ft.Row(
+                        [
+                            ft.Text("Not Working",
+                                    style="headlineSmall",
+                                    color="red")
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    )
             else:
-                row.controls[1].controls[0].content.content.controls[1] = ft.Row(
-                    [
-                        ft.ProgressRing(
-                            width=50, height=50, stroke_width=5, color="#00ff00"
-                        )
-                    ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                )  # type: ignore
-                row.controls[1].controls[0].content.content.controls[2] = ft.Row(
-                    [ft.Text("Working", style="headlineSmall", color="#00ff00")],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                )
+                row.controls[1].controls[0].content.content.controls[
+                    1] = ft.Row(
+                        [
+                            ft.ProgressRing(width=50,
+                                            height=50,
+                                            stroke_width=5,
+                                            color="#00ff00")
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    )  # type: ignore
+                row.controls[1].controls[0].content.content.controls[
+                    2] = ft.Row(
+                        [
+                            ft.Text("Working",
+                                    style="headlineSmall",
+                                    color="#00ff00")
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    )
 
             raw_nodes = status_record["connected_nodes"]
             nodes = []
@@ -356,13 +363,10 @@ def scan_page(page: ft.Page):
                 nodes.append([i.split(":")[0], i.split(":")[1]])
 
             row.controls[0].controls[0].content.content.controls[1].rows = [
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text(i[0])),
-                        ft.DataCell(ft.Text(i[1])),
-                    ],
-                )
-                for i in nodes
+                ft.DataRow(cells=[
+                    ft.DataCell(ft.Text(i[0])),
+                    ft.DataCell(ft.Text(i[1])),
+                ], ) for i in nodes
             ]
 
             page.update()
@@ -400,9 +404,8 @@ def GUI(interval_1_data=1, interval_2_data=100):
 
     interval_1 = interval_1_data
     interval_2 = interval_2_data
-    ft.app(
-        target=scan_page, assets_dir=os.path.join(os.path.dirname(__file__), "assets")
-    )
+    ft.app(target=scan_page,
+           assets_dir=os.path.join(os.path.dirname(__file__), "assets"))
 
 
 def WEB(host_data, port_data, interval_1_data=1, interval_2_data=100):
