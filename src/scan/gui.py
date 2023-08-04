@@ -66,13 +66,13 @@ def scan_page(page: ft.Page):
                                         ft.Text("Port"), numeric=True),
                                 ],
                                 rows=[
-                                ft.DataRow(
-                                    cells=[
-                                        ft.DataCell(ft.Text("Loading")),
-                                        ft.DataCell(ft.Text("0")),
+                                    ft.DataRow(
+                                        cells=[
+                                            ft.DataCell(ft.Text("Loading")),
+                                            ft.DataCell(ft.Text("0")),
 
-                                    ],
-                                )],
+                                        ],
+                                    )],
                             ),
                         ],
                         scroll="AUTO",
@@ -126,7 +126,6 @@ def scan_page(page: ft.Page):
         ]),
     ], alignment=ft.MainAxisAlignment.CENTER)
 
-
     tx_row = ft.ResponsiveRow([ft.Card(
         content=ft.Container(
             content=ft.Column(
@@ -162,21 +161,22 @@ def scan_page(page: ft.Page):
     )], alignment=ft.MainAxisAlignment.CENTER)
 
     def close_bs(e):
-            bs.open = False
-            bs.update()
+        bs.open = False
+        bs.update()
     bs = ft.BottomSheet(
-            ft.Container(
-                ft.Column(
-                    [
-                        ft.Text("This is sheet's content!"),
-                        ft.Row([ft.ElevatedButton("Close bottom sheet", on_click=close_bs)], alignment=ft.MainAxisAlignment.CENTER)
-                    ],
-                    tight=True,
-                ),
-                padding=10,
+        ft.Container(
+            ft.Column(
+                [
+                    ft.Text("This is sheet's content!"),
+                    ft.Row([ft.ElevatedButton(
+                            "Close bottom sheet", on_click=close_bs)], alignment=ft.MainAxisAlignment.CENTER)
+                ],
+                tight=True,
             ),
-            open=False,
-        )
+            padding=10,
+        ),
+        open=False,
+    )
     page.overlay.append(bs)
 
     def block_situation_tracker_updater(topic, message):
@@ -197,8 +197,6 @@ def scan_page(page: ft.Page):
             row.controls[2].controls[0].content.content.controls[2] = ft.ProgressBar(
                 value=value, color="#dbff00")
 
-
-
             def show_bs(signature):
                 bs.open = True
                 the_signature = signature["signature"]
@@ -207,30 +205,30 @@ def scan_page(page: ft.Page):
                 amount = signature["amount"]
                 transaction_fee = signature["transaction_fee"]
                 bs.content.content.controls = [ft.Text(f"Signature: {the_signature}"),
-                                            ft.Text(f"FromUser: {from_user}"),
-                                                ft.Text(f"ToUser: {to_user}"),
-                                                ft.Text(f"Amount: {amount}"),
-                                                ft.Text(f"Fee: {transaction_fee}"),
-                                                ft.Row([ft.ElevatedButton("Close", on_click=close_bs)], alignment=ft.MainAxisAlignment.CENTER)
-                                            ]
+                                               ft.Text(
+                                                   f"FromUser: {from_user}"),
+                                               ft.Text(f"ToUser: {to_user}"),
+                                               ft.Text(f"Amount: {amount}"),
+                                               ft.Text(
+                                                   f"Fee: {transaction_fee}"),
+                                               ft.Row([ft.ElevatedButton(
+                                                   "Close", on_click=close_bs)], alignment=ft.MainAxisAlignment.CENTER)
+                                               ]
                 bs.update()
 
-
-
-
-            
             tx_row.controls[0].content.content.controls[1].controls[0].rows = [
-                                    ft.DataRow(
-                                        cells=[
-                                            ft.DataCell(ft.Text(i["signature"]), on_tap=lambda e, i=i: show_bs(i)),
-                                            ft.DataCell(ft.Text(i["transaction_fee"])),
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(
+                            ft.Text(i["signature"]), on_tap=lambda e, i=i: show_bs(i)),
+                        ft.DataCell(
+                            ft.Text(i["transaction_fee"])),
 
-                                        ],
-                                    ) for i in validating_list]
-            
+                    ],
+                ) for i in validating_list]
 
             try:
-                page.update()        
+                page.update()
             except:
                 traceback.print_exc()
 
@@ -250,17 +248,11 @@ def scan_page(page: ft.Page):
         except:
             pass
         page.pubsub.send_all_on_topic("block", "block")
-        
 
-
-    
     def threaderblock_situation_tracker():
         while True:
             block_situation_tracker()
             time.sleep(interval_1)
-    
-
-
 
     def status_situation_tracker_update(topic, message):
         global status_record
@@ -270,61 +262,54 @@ def scan_page(page: ft.Page):
             if not working:
 
                 row.controls[1].controls[0].content.content.controls[1] = ft.Row([ft.Text("", style="headlineSmall",
-                                color="red")], alignment=ft.MainAxisAlignment.CENTER)      # type: ignore
+                                                                                          color="red")], alignment=ft.MainAxisAlignment.CENTER)      # type: ignore
                 row.controls[1].controls[0].content.content.controls[2] = ft.Row([ft.Text("Not Working", style="headlineSmall",
-                                color="red")], alignment=ft.MainAxisAlignment.CENTER)
+                                                                                          color="red")], alignment=ft.MainAxisAlignment.CENTER)
             else:
                 row.controls[1].controls[0].content.content.controls[1] = ft.Row([ft.ProgressRing(width=50, height=50, stroke_width=5,
-                                color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER)    # type: ignore
+                                                                                                  color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER)    # type: ignore
                 row.controls[1].controls[0].content.content.controls[2] = ft.Row([ft.Text("Working", style="headlineSmall",
-                                color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER) 
+                                                                                          color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER)
 
-            
             raw_nodes = status_record["connected_nodes"]
             nodes = []
             for i in raw_nodes:
                 nodes.append([i.split(":")[0], i.split(":")[1]])
 
             row.controls[0].controls[0].content.content.controls[1].rows = [
-                                    ft.DataRow(
-                                        cells=[
-                                            ft.DataCell(ft.Text(i[0])),
-                                            ft.DataCell(ft.Text(i[1])),
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(i[0])),
+                        ft.DataCell(ft.Text(i[1])),
 
-                                        ],
-                                    ) for i in nodes]
-
-
+                    ],
+                ) for i in nodes]
 
             try:
-                page.update()        
+                page.update()
             except:
                 traceback.print_exc()
+
     def status_situation_tracker():
         global status_record
         status_record = the_statatus_db.get("status")
         if status_record != None:
             page.pubsub.send_all_on_topic("status", "status")
 
-
-
-    
     def threaderstatus_situation_tracker():
         while True:
             status_situation_tracker()
             time.sleep(interval_2)
 
-    page.pubsub.subscribe_topic("block",block_situation_tracker_updater)
-    page.pubsub.subscribe_topic("status",status_situation_tracker_update)
+    page.pubsub.subscribe_topic("block", block_situation_tracker_updater)
+    page.pubsub.subscribe_topic("status", status_situation_tracker_update)
     block_situation_tracker()
     status_situation_tracker()
     if not thread_generated:
         print("Threader started")
         Thread(target=threaderblock_situation_tracker).start()
-        Thread(target=threaderstatus_situation_tracker).start()    
+        Thread(target=threaderstatus_situation_tracker).start()
         thread_generated = True
-
-
 
     page.add(row, tx_row,)
 
