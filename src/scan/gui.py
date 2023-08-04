@@ -6,6 +6,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 from threading import Thread
 import time
+import traceback
 import flet as ft
 
 from .scan import SCAN, the_statatus_db, the_block_db
@@ -228,8 +229,10 @@ def scan_page(page: ft.Page):
                                     ) for i in validating_list]
             
 
-
-            page.update()        
+            try:
+                page.update()        
+            except:
+                traceback.print_exc()
 
     def block_situation_tracker():
         global block_record
@@ -293,7 +296,10 @@ def scan_page(page: ft.Page):
 
 
 
-            page.update()
+            try:
+                page.update()        
+            except:
+                traceback.print_exc()
     def status_situation_tracker():
         global status_record
         status_record = the_statatus_db.get("status")
