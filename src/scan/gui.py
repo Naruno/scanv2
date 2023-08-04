@@ -30,7 +30,7 @@ status_record = None
 def scan_page(page: ft.Page):
     """
 
-    :param page: ft.Page: 
+    :param page: ft.Page:
 
     """
     global interval_1
@@ -228,7 +228,7 @@ def scan_page(page: ft.Page):
     def close_bs(e):
         """
 
-        :param e: 
+        :param e:
 
         """
         bs.open = False
@@ -255,8 +255,8 @@ def scan_page(page: ft.Page):
     def block_situation_tracker_updater(topic, message):
         """
 
-        :param topic: 
-        :param message: 
+        :param topic:
+        :param message:
 
         """
         global block_record
@@ -284,7 +284,7 @@ def scan_page(page: ft.Page):
             def show_bs(signature):
                 """
 
-                :param signature: 
+                :param signature:
 
                 """
                 bs.open = True
@@ -352,8 +352,8 @@ def scan_page(page: ft.Page):
     def status_situation_tracker_update(topic, message):
         """
 
-        :param topic: 
-        :param message: 
+        :param topic:
+        :param message:
 
         """
         global status_record
@@ -452,8 +452,8 @@ def GUI(interval_1_data=1, interval_2_data=100):
 def WEB(host_data, port_data, interval_1_data=1, interval_2_data=100):
     """
 
-    :param host_data: 
-    :param port_data: 
+    :param host_data:
+    :param port_data:
     :param interval_1_data:  (Default value = 1)
     :param interval_2_data:  (Default value = 100)
 
