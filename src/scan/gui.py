@@ -4,14 +4,14 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
-from threading import Thread
+import os
 import time
 import traceback
+from threading import Thread
+
 import flet as ft
 
-from .scan import SCAN, the_statatus_db, the_block_db
-import os
-
+from .scan import SCAN, the_block_db, the_statatus_db
 
 network = None
 host = None
