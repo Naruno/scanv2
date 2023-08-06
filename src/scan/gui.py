@@ -33,6 +33,7 @@ def scan_page(page: ft.Page):
     global status_record
     page.scroll = "AUTO"
     page.theme = ft.Theme(font_family="Poppins")
+    page.title = "Scan"
 
     page.appbar = ft.AppBar(
         bgcolor="#212529",
