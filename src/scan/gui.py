@@ -11,7 +11,9 @@ from threading import Thread
 
 import flet as ft
 
-from .scan import SCAN, the_block_db, the_statatus_db
+from .scan import SCAN
+from .scan import the_block_db
+from .scan import the_statatus_db
 
 network = None
 host = None
