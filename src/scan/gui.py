@@ -38,139 +38,200 @@ def scan_page(page: ft.Page):
     page.appbar = ft.AppBar(
         bgcolor="#212529",
         leading=ft.Image(
-                src=f"https://docs.naruno.org/assets/images/logo.png",
-                width=40,
-                height=40,
-                fit=ft.ImageFit.FIT_WIDTH,
+            src=f"https://docs.naruno.org/assets/images/logo.png",
+            width=40,
+            height=40,
+            fit=ft.ImageFit.FIT_WIDTH,
         ),
         leading_width=40,
         title=ft.Text("Naruno Scan"),
         center_title=False,
-
     )
 
-    the_block_situations = ft.Row([ft.Text(value="False", style="headlineLarge"), ft.Text(value="Loading", style="headlineLarge"), ft.Text(
-        value="False", style="headlineLarge"),], alignment=ft.MainAxisAlignment.CENTER)        # type: ignore
+    the_block_situations = ft.Row(
+        [
+            ft.Text(value="False", style="headlineLarge"),
+            ft.Text(value="Loading", style="headlineLarge"),
+            ft.Text(value="False", style="headlineLarge"),
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,
+    )  # type: ignore
 
-    row = ft.ResponsiveRow(spacing=10, controls=[
-        ft.Column(col={"sm": 4}, controls=[
+    row = ft.ResponsiveRow(
+        spacing=10,
+        controls=[
+            ft.Column(
+                col={"sm": 4},
+                controls=[
+                    ft.Card(
+                        content=ft.Container(
+                            content=ft.Column(
+                                [
+                                    ft.Row(
+                                        [
+                                            ft.Text(
+                                                value="Connected Nodes",
+                                                style="headlineMedium",
+                                            )
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                    ),  # type: ignore
+                                    ft.DataTable(
+                                        columns=[
+                                            ft.DataColumn(ft.Text("Host")),
+                                            ft.DataColumn(
+                                                ft.Text("Port"), numeric=True
+                                            ),
+                                        ],
+                                        rows=[
+                                            ft.DataRow(
+                                                cells=[
+                                                    ft.DataCell(ft.Text("Loading")),
+                                                    ft.DataCell(ft.Text("0")),
+                                                ],
+                                            )
+                                        ],
+                                    ),
+                                ],
+                                scroll="AUTO",
+                            ),
+                            padding=10,
+                        ),
+                        height=180,
+                        width=400,
+                    ),
+                ],
+            ),
+            ft.Column(
+                col={"sm": 4},
+                controls=[
+                    ft.Card(
+                        content=ft.Container(
+                            content=ft.Column(
+                                [
+                                    ft.Row(
+                                        [
+                                            ft.Text(
+                                                value="Health", style="headlineMedium"
+                                            )
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                    ),  # type: ignore
+                                    ft.Row(
+                                        [
+                                            ft.Text(
+                                                "Loading",
+                                                style="headlineSmall",
+                                                color="#00ff00",
+                                            )
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                    ),
+                                    ft.Row(
+                                        [
+                                            ft.Text(
+                                                "Loading",
+                                                style="headlineSmall",
+                                                color="#00ff00",
+                                            )
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                    ),
+                                ]
+                            ),
+                            padding=10,
+                        ),
+                        height=180,
+                        width=400,
+                    ),
+                ],
+            ),
+            ft.Column(
+                col={"sm": 4},
+                controls=[
+                    ft.Card(
+                        content=ft.Container(
+                            content=ft.Column(
+                                [
+                                    ft.Row(
+                                        [
+                                            ft.Text(
+                                                value="Block", style="headlineMedium"
+                                            )
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                    ),  # type: ignore
+                                    ft.Text(value="Loading", style="headlineSmall"),
+                                    ft.Text(value="Loading", style="headlineSmall"),
+                                ]
+                            ),
+                            padding=20,
+                        ),
+                        height=180,
+                        width=400,
+                    ),
+                ],
+            ),
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,
+    )
+
+    tx_row = ft.ResponsiveRow(
+        [
             ft.Card(
                 content=ft.Container(
                     content=ft.Column(
                         [
-                            ft.Row([ft.Text(value="Connected Nodes", style="headlineMedium")],
-                                   alignment=ft.MainAxisAlignment.CENTER),  # type: ignore
-                            ft.DataTable(
-                                columns=[
-                                    ft.DataColumn(ft.Text("Host")),
-                                    ft.DataColumn(
-                                        ft.Text("Port"), numeric=True),
-                                ],
-                                rows=[
-                                    ft.DataRow(
-                                        cells=[
-                                            ft.DataCell(ft.Text("Loading")),
-                                            ft.DataCell(ft.Text("0")),
-
+                            ft.Row(
+                                [ft.Text(value="Transactions", style="headlineMedium")],
+                                alignment=ft.MainAxisAlignment.CENTER,
+                            ),  # type: ignore
+                            ft.Row(
+                                [
+                                    ft.DataTable(
+                                        width=1200,
+                                        columns=[
+                                            ft.DataColumn(ft.Text("Signature")),
+                                            ft.DataColumn(ft.Text("Fee")),
                                         ],
-                                    )],
+                                        rows=[
+                                            ft.DataRow(
+                                                cells=[
+                                                    ft.DataCell(ft.Text("Loading")),
+                                                    ft.DataCell(ft.Text("Loading")),
+                                                ],
+                                            )
+                                        ],
+                                    )
+                                ],
+                                scroll="AUTO",
+                                alignment=ft.MainAxisAlignment.CENTER,
                             ),
                         ],
                         scroll="AUTO",
                     ),
-                    padding=10,
+                    padding=20,
                 ),
-                height=180,
-                width=400,
-            ),
-        ]),
-
-
-        ft.Column(col={"sm": 4}, controls=[ft.Card(
-            content=ft.Container(
-                content=ft.Column(
-                    [
-                        ft.Row([ft.Text(value="Health", style="headlineMedium")],
-                               alignment=ft.MainAxisAlignment.CENTER),  # type: ignore
-                        ft.Row([ft.Text("Loading", style="headlineSmall",
-                               color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER),
-                        ft.Row([ft.Text("Loading", style="headlineSmall",
-                               color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER),
-                    ]
-                ),
-
-                padding=10,
-            ),
-            height=180,
-            width=400,
-        ),
-        ]),
-
-
-        ft.Column(col={"sm": 4}, controls=[ft.Card(
-            content=ft.Container(
-                content=ft.Column(
-                    [
-                        ft.Row([ft.Text(value="Block", style="headlineMedium")],
-                               alignment=ft.MainAxisAlignment.CENTER),  # type: ignore
-                        ft.Text(value="Loading", style="headlineSmall"),
-                        ft.Text(value="Loading", style="headlineSmall"),
-                    ]
-                ),
-
-                padding=20,
-            ),
-            height=180,
-            width=400,
-        ),
-
-        ]),
-    ], alignment=ft.MainAxisAlignment.CENTER)
-
-    tx_row = ft.ResponsiveRow([ft.Card(
-        content=ft.Container(
-            content=ft.Column(
-
-                [
-                    ft.Row([ft.Text(value="Transactions", style="headlineMedium")],
-                           alignment=ft.MainAxisAlignment.CENTER),  # type: ignore
-                    ft.Row([ft.DataTable(
-                            width=1200,
-                            columns=[
-                                ft.DataColumn(ft.Text("Signature")),
-                                ft.DataColumn(ft.Text("Fee")),
-                            ],
-                            rows=[
-                                ft.DataRow(
-                                    cells=[
-                                        ft.DataCell(ft.Text("Loading")),
-                                        ft.DataCell(ft.Text("Loading")),
-
-                                    ],
-                                )],
-                            )], scroll="AUTO", alignment=ft.MainAxisAlignment.CENTER)
-
-                ],
-                scroll="AUTO",
-
-            ),
-
-            padding=20,
-        ),
-        width=1220,
-        height=540,
-    )], alignment=ft.MainAxisAlignment.CENTER)
+                width=1220,
+                height=540,
+            )
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,
+    )
 
     def close_bs(e):
         bs.open = False
         bs.update()
+
     bs = ft.BottomSheet(
         ft.Container(
             ft.Column(
                 [
                     ft.Text("This is sheet's content!"),
-                    ft.Row([ft.ElevatedButton(
-                            "Close bottom sheet", on_click=close_bs)], alignment=ft.MainAxisAlignment.CENTER)
+                    ft.Row(
+                        [ft.ElevatedButton("Close bottom sheet", on_click=close_bs)],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    ),
                 ],
                 tight=True,
             ),
@@ -193,10 +254,15 @@ def scan_page(page: ft.Page):
                 value = 0.6
             if third_value == True:
                 value = 1
-            row.controls[2].controls[0].content.content.controls[1] = ft.Row([ft.Text(
-                value=second_value, style="headlineLarge"),], alignment=ft.MainAxisAlignment.CENTER)        # type: ignore
+            row.controls[2].controls[0].content.content.controls[1] = ft.Row(
+                [
+                    ft.Text(value=second_value, style="headlineLarge"),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+            )  # type: ignore
             row.controls[2].controls[0].content.content.controls[2] = ft.ProgressBar(
-                value=value, color="#dbff00")
+                value=value, color="#dbff00"
+            )
 
             def show_bs(signature):
                 bs.open = True
@@ -205,28 +271,30 @@ def scan_page(page: ft.Page):
                 to_user = signature["toUser"]
                 amount = signature["amount"]
                 transaction_fee = signature["transaction_fee"]
-                bs.content.content.controls = [ft.Text(f"Signature: {the_signature}"),
-                                               ft.Text(
-                                                   f"FromUser: {from_user}"),
-                                               ft.Text(f"ToUser: {to_user}"),
-                                               ft.Text(f"Amount: {amount}"),
-                                               ft.Text(
-                                                   f"Fee: {transaction_fee}"),
-                                               ft.Row([ft.ElevatedButton(
-                                                   "Close", on_click=close_bs)], alignment=ft.MainAxisAlignment.CENTER)
-                                               ]
+                bs.content.content.controls = [
+                    ft.Text(f"Signature: {the_signature}"),
+                    ft.Text(f"FromUser: {from_user}"),
+                    ft.Text(f"ToUser: {to_user}"),
+                    ft.Text(f"Amount: {amount}"),
+                    ft.Text(f"Fee: {transaction_fee}"),
+                    ft.Row(
+                        [ft.ElevatedButton("Close", on_click=close_bs)],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    ),
+                ]
                 bs.update()
 
             tx_row.controls[0].content.content.controls[1].controls[0].rows = [
                 ft.DataRow(
                     cells=[
                         ft.DataCell(
-                            ft.Text(i["signature"]), on_tap=lambda e, i=i: show_bs(i)),
-                        ft.DataCell(
-                            ft.Text(i["transaction_fee"])),
-
+                            ft.Text(i["signature"]), on_tap=lambda e, i=i: show_bs(i)
+                        ),
+                        ft.DataCell(ft.Text(i["transaction_fee"])),
                     ],
-                ) for i in validating_list]
+                )
+                for i in validating_list
+            ]
 
             try:
                 page.update()
@@ -243,7 +311,9 @@ def scan_page(page: ft.Page):
             for i in raw_record:
                 list_record.append([float(i), raw_record[i]])
 
-            list_record.sort(key=lambda x: x[0], )
+            list_record.sort(
+                key=lambda x: x[0],
+            )
 
             block_record = list_record[0][1]
         except:
@@ -261,16 +331,27 @@ def scan_page(page: ft.Page):
             working = True if status_record["status"] == "Working" else False
 
             if not working:
-
-                row.controls[1].controls[0].content.content.controls[1] = ft.Row([ft.Text("", style="headlineSmall",
-                                                                                          color="red")], alignment=ft.MainAxisAlignment.CENTER)      # type: ignore
-                row.controls[1].controls[0].content.content.controls[2] = ft.Row([ft.Text("Not Working", style="headlineSmall",
-                                                                                          color="red")], alignment=ft.MainAxisAlignment.CENTER)
+                row.controls[1].controls[0].content.content.controls[1] = ft.Row(
+                    [ft.Text("", style="headlineSmall", color="red")],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                )  # type: ignore
+                row.controls[1].controls[0].content.content.controls[2] = ft.Row(
+                    [ft.Text("Not Working", style="headlineSmall", color="red")],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                )
             else:
-                row.controls[1].controls[0].content.content.controls[1] = ft.Row([ft.ProgressRing(width=50, height=50, stroke_width=5,
-                                                                                                  color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER)    # type: ignore
-                row.controls[1].controls[0].content.content.controls[2] = ft.Row([ft.Text("Working", style="headlineSmall",
-                                                                                          color="#00ff00")], alignment=ft.MainAxisAlignment.CENTER)
+                row.controls[1].controls[0].content.content.controls[1] = ft.Row(
+                    [
+                        ft.ProgressRing(
+                            width=50, height=50, stroke_width=5, color="#00ff00"
+                        )
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                )  # type: ignore
+                row.controls[1].controls[0].content.content.controls[2] = ft.Row(
+                    [ft.Text("Working", style="headlineSmall", color="#00ff00")],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                )
 
             raw_nodes = status_record["connected_nodes"]
             nodes = []
@@ -282,9 +363,10 @@ def scan_page(page: ft.Page):
                     cells=[
                         ft.DataCell(ft.Text(i[0])),
                         ft.DataCell(ft.Text(i[1])),
-
                     ],
-                ) for i in nodes]
+                )
+                for i in nodes
+            ]
 
             try:
                 page.update()
@@ -312,7 +394,10 @@ def scan_page(page: ft.Page):
         Thread(target=threaderstatus_situation_tracker).start()
         thread_generated = True
 
-    page.add(row, tx_row,)
+    page.add(
+        row,
+        tx_row,
+    )
 
 
 def GUI(interval_1_data=1, interval_2_data=100):
@@ -321,12 +406,12 @@ def GUI(interval_1_data=1, interval_2_data=100):
 
     interval_1 = interval_1_data
     interval_2 = interval_2_data
-    ft.app(target=scan_page, assets_dir=os.path.join(
-        os.path.dirname(__file__), "assets"))
+    ft.app(
+        target=scan_page, assets_dir=os.path.join(os.path.dirname(__file__), "assets")
+    )
 
 
 def WEB(host_data, port_data, interval_1_data=1, interval_2_data=100):
-
     global host
     global port
     global interval_1
@@ -337,5 +422,10 @@ def WEB(host_data, port_data, interval_1_data=1, interval_2_data=100):
     interval_1 = interval_1_data
     interval_2 = interval_2_data
 
-    ft.app(target=scan_page, view=ft.AppView.WEB_BROWSER, host=host,
-           port=port, assets_dir=os.path.join(os.path.dirname(__file__), "assets"))
+    ft.app(
+        target=scan_page,
+        view=ft.AppView.WEB_BROWSER,
+        host=host,
+        port=port,
+        assets_dir=os.path.join(os.path.dirname(__file__), "assets"),
+    )
