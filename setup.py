@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='naruno_scan',
-version='0.1.0',
+version='0.1.1',
 description="""Scan website for Naruno""",
 long_description="".join(open("README.md", encoding="utf-8").readlines()),
 long_description_content_type='text/markdown',
