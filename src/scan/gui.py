@@ -26,6 +26,11 @@ status_record = None
 
 
 def scan_page(page: ft.Page):
+    """
+
+    :param page: ft.Page: 
+
+    """
     global interval_1
     global interval_2
     global thread_generated
@@ -220,6 +225,11 @@ def scan_page(page: ft.Page):
     )
 
     def close_bs(e):
+        """
+
+        :param e: 
+
+        """
         bs.open = False
         bs.update()
 
@@ -242,6 +252,12 @@ def scan_page(page: ft.Page):
     page.overlay.append(bs)
 
     def block_situation_tracker_updater(topic, message):
+        """
+
+        :param topic: 
+        :param message: 
+
+        """
         global block_record
         if block_record != None:
             first_value = block_record["round_1"]
@@ -265,6 +281,11 @@ def scan_page(page: ft.Page):
             )
 
             def show_bs(signature):
+                """
+
+                :param signature: 
+
+                """
                 bs.open = True
                 the_signature = signature["signature"]
                 from_user = signature["fromUser"]
@@ -302,6 +323,7 @@ def scan_page(page: ft.Page):
                 traceback.print_exc()
 
     def block_situation_tracker():
+        """ """
         global block_record
         block_record = None
         try:
@@ -321,11 +343,18 @@ def scan_page(page: ft.Page):
         page.pubsub.send_all_on_topic("block", "block")
 
     def threaderblock_situation_tracker():
+        """ """
         while True:
             block_situation_tracker()
             time.sleep(interval_1)
 
     def status_situation_tracker_update(topic, message):
+        """
+
+        :param topic: 
+        :param message: 
+
+        """
         global status_record
         if status_record != None:
             working = True if status_record["status"] == "Working" else False
@@ -374,12 +403,14 @@ def scan_page(page: ft.Page):
                 traceback.print_exc()
 
     def status_situation_tracker():
+        """ """
         global status_record
         status_record = the_statatus_db.get("status")
         if status_record != None:
             page.pubsub.send_all_on_topic("status", "status")
 
     def threaderstatus_situation_tracker():
+        """ """
         while True:
             status_situation_tracker()
             time.sleep(interval_2)
@@ -401,6 +432,12 @@ def scan_page(page: ft.Page):
 
 
 def GUI(interval_1_data=1, interval_2_data=100):
+    """
+
+    :param interval_1_data:  (Default value = 1)
+    :param interval_2_data:  (Default value = 100)
+
+    """
     global interval_1
     global interval_2
 
@@ -412,6 +449,14 @@ def GUI(interval_1_data=1, interval_2_data=100):
 
 
 def WEB(host_data, port_data, interval_1_data=1, interval_2_data=100):
+    """
+
+    :param host_data: 
+    :param port_data: 
+    :param interval_1_data:  (Default value = 1)
+    :param interval_2_data:  (Default value = 100)
+
+    """
     global host
     global port
     global interval_1
